@@ -1,45 +1,15 @@
 fileFormatVersion: 2
-guid: bdcbdfce525749b44bf4f102e6b2bf1d
+guid: c428b56960cb9614eb228025f9a40c5c
 ModelImporter:
   serializedVersion: 16
   fileIDToRecycleName:
-    100000: cube3
-    100002: cube5
-    100004: cube5_copy6
-    100006: cube5_copy7
-    100008: cylinder2
-    100010: icosahedron5
-    100012: //RootNode
-    100014: torus1
-    400000: cube3
-    400002: cube5
-    400004: cube5_copy6
-    400006: cube5_copy7
-    400008: cylinder2
-    400010: icosahedron5
-    400012: //RootNode
-    400014: torus1
-    2300000: cube3
-    2300002: cube5
-    2300004: cube5_copy6
-    2300006: cube5_copy7
-    2300008: cylinder2
-    2300010: icosahedron5
-    2300012: torus1
-    3300000: cube3
-    3300002: cube5
-    3300004: cube5_copy6
-    3300006: cube5_copy7
-    3300008: cylinder2
-    3300010: icosahedron5
-    3300012: torus1
-    4300000: cube3
-    4300002: cube5
-    4300004: cube5_copy6
-    4300006: cube5_copy7
-    4300008: cylinder2
-    4300010: icosahedron5
-    4300012: torus1
+    100000: sphere1
+    100002: //RootNode
+    400000: sphere1
+    400002: //RootNode
+    2300000: sphere1
+    3300000: sphere1
+    4300000: sphere1
     9500000: //RootNode
     11100000: //RootNode
   materials:
@@ -93,6 +63,6 @@ ModelImporter:
     feetSpacing: 0
     rootMotionBoneName: 
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 1
+  animationType: 0
   additionalBone: 0
   userData: 

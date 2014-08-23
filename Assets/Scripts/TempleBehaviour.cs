@@ -4,6 +4,7 @@ using System.Collections;
 public class TempleBehaviour : MonoBehaviour {
 
 	public Transform gem;
+	public Transform [] lights;
 	public MonumentBehaviour[] monuments;
 	public GameColor.ColorName colorName;
 
@@ -27,6 +28,14 @@ public class TempleBehaviour : MonoBehaviour {
 			charged = allCharged;
 			if (charged) {
 				StartCoroutine(ActivateRoutine());
+			}
+		}
+
+		for (int i = 0; i < lights.Length; i++) {
+			if (i >= monuments.Length) {
+				lights[i].renderer.enabled = false;
+			} else {
+				lights[i].renderer.material.color = monuments[i].GetCurrentColor();
 			}
 		}
 	}

@@ -45,6 +45,14 @@ public class MonumentBehaviour : HandleColorHitBehaviour {
 		return filled >= amountRequired;
 	}
 
+	public Color GetCurrentColor() {
+		if (IsCharged()) {
+			return color.GemColor();
+		} else {
+			return color.DullColor();
+		}
+	}
+
 	private IEnumerator ActivateRoutine() {
 		animation.Play();
 
