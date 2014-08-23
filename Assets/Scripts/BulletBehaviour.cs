@@ -8,6 +8,8 @@ public class BulletBehaviour : MonoBehaviour {
 	public float lifetime;
 
 	private bool alive;
+	private GameColor color;
+	private float colorAmount;
 
 	// Use this for initialization
 	void Start () {
@@ -21,7 +23,18 @@ public class BulletBehaviour : MonoBehaviour {
 	}
 
 	void OnCollisionEnter(Collision collision) {
+		ReceiveColorBehaviour other = collision.gameObject.GetComponent<ReceiveColorBehaviour>();
+		if (other != null) {
+			other.ReceiveColor(color, colorAmount);
+		}
+
 		DestroySelf ();
+	}
+
+	public void SetColor(GameColor color, float amount) {
+		this.color = color;
+		this.colorAmount = amount;
+		renderer.material.color = color.Color();
 	}
 
 	private void DestroySelf() {
