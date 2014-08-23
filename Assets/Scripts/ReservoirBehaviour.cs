@@ -13,23 +13,34 @@ public class ReservoirBehaviour : MonoBehaviour {
 	private GameColor currentColor;
 	private GameColor lastColor;
 
+	private ShipBehaviour ship;
+
 	// Use this for initialization
 	void Start () {
+		ship = GetComponent<ShipBehaviour>();
+
 		tanks = new Dictionary<GameColor, float>();
 
 		Screen.showCursor = false;
 
 		currentColor = GameColor.Green;
-		tanks[currentColor] = tankSize;
 		tanks[GameColor.Red] = tankSize;
+		tanks[GameColor.Green] = tankSize;
+		tanks[GameColor.Blue] = tankSize;
+		tanks[GameColor.Yellow] = tankSize;
+		tanks[GameColor.Purple] = tankSize;
+		tanks[GameColor.Orange] = tankSize;
+
 	}
 	
 	// Update is called once per frame
 	void Update () {
-		if (Input.GetAxis("Mouse ScrollWheel") > 0) {
-			SwitchColor(false);
-		} else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
-			SwitchColor(true);
+		if (!ship.IsStunned()) {
+			if (Input.GetAxis("Mouse ScrollWheel") > 0) {
+				SwitchColor(false);
+			} else if (Input.GetAxis("Mouse ScrollWheel") < 0) {
+				SwitchColor(true);
+			}
 		}
 	}
 

@@ -34,7 +34,7 @@ public class BulletBehaviour : MonoBehaviour {
 	public void SetColor(GameColor color, float amount) {
 		this.color = color;
 		this.colorAmount = amount;
-		renderer.material.color = color.Color();
+		renderer.material.color = color.GemColor();
 	}
 
 	private void DestroySelf() {

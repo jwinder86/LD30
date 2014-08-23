@@ -22,23 +22,30 @@ public class GameColor {
 	};
 
 	private static Dictionary<ColorName, Color> guiColors = new Dictionary<ColorName, Color>() {
-		{ColorName.Green, new Color(0.1f, 0.9f, 0.1f, 0.5f)},
-		{ColorName.Red, new Color(0.9f, 0.1f, 0.1f, 0.5f)}
-	};
-
-	private static Dictionary<ColorName, Color> worldColors = new Dictionary<ColorName, Color>() {
-		{ColorName.Green, new Color(0.1f, 0.9f, 0.1f, 1f)},
-		{ColorName.Red, new Color(0.9f, 0.1f, 0.1f, 1f)}
+		{ColorName.Green, new Color(0.3f, 0.9f, 0.3f, 0.7f)},
+		{ColorName.Red, new Color(0.9f, 0.3f, 0.3f, 0.7f)},
+		{ColorName.Blue, new Color(0.3f, 0.3f, 0.9f, 0.7f)},
+		{ColorName.Yellow, new Color(0.9f, 0.9f, 0.3f, 0.7f)},
+		{ColorName.Purple, new Color(0.6f, 0.3f, 0.9f, 0.7f)},
+		{ColorName.Orange, new Color(0.9f, 0.6f, 0.3f, 0.7f)}
 	};
 
 	private static Dictionary<ColorName, Color> dullColors = new Dictionary<ColorName, Color>() {
 		{ColorName.Green, new Color(0.3f, 0.4f, 0.3f, 1f)},
-		{ColorName.Red, new Color(0.4f, 0.3f, 0.3f, 1f)}
+		{ColorName.Red, new Color(0.4f, 0.3f, 0.3f, 1f)},
+		{ColorName.Blue, new Color(0.3f, 0.3f, 0.4f, 1f)},
+		{ColorName.Yellow, new Color(0.4f, 0.4f, 0.3f, 1f)},
+		{ColorName.Purple, new Color(0.35f, 0.3f, 0.4f, 1f)},
+		{ColorName.Orange, new Color(0.4f, 0.35f, 0.3f, 1f)}
 	};
 
 	private static Dictionary<ColorName, Color> gemColors = new Dictionary<ColorName, Color>() {
 		{ColorName.Green, new Color(0.4f, 1f, 0.4f, 1f)},
-		{ColorName.Red, new Color(1f, 0.4f, 0.4f, 1f)}
+		{ColorName.Red, new Color(1f, 0.4f, 0.4f, 1f)},
+		{ColorName.Blue, new Color(0.4f, 0.4f, 1f, 1f)},
+		{ColorName.Yellow, new Color(1f, 1f, 0.4f, 1f)},
+		{ColorName.Purple, new Color(0.7f, 0.4f, 1f, 1f)},
+		{ColorName.Orange, new Color(1f, 0.7f, 0.4f, 1f)}
 	};
 
 	private static List<GameColor> colorOrder = new List<GameColor>(new GameColor[] {
@@ -62,10 +69,6 @@ public class GameColor {
 
 	public Color GuiColor() {
 		return guiColors[color];
-	}
-
-	public Color Color() {
-		return worldColors[color];
 	}
 
 	public Color DullColor() {
