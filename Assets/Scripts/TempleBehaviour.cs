@@ -3,19 +3,26 @@ using System.Collections;
 
 public class TempleBehaviour : MonoBehaviour {
 
+	public LineBehaviour linePrefab;
+
 	public Transform gem;
-	public Transform [] lights;
+	public Transform[] lights;
+	public Transform[] positions;
+	public Transform gemPosition;
 	public MonumentBehaviour[] monuments;
 	public GameColor.ColorName colorName;
 
 	private GameColor color;
 	private bool charged;
+	private LineBehaviour[] lines;
 
 	// Use this for initialization
 	void Start () {
 		charged = false;
 		color = GameColor.FromName(colorName);
 		gem.renderer.material.color = color.DullColor();
+
+		lines = new LineBehaviour[monuments.Length];
 	}
 	
 	// Update is called once per frame
@@ -37,8 +44,24 @@ public class TempleBehaviour : MonoBehaviour {
 				lights[i].renderer.enabled = false;
 			} else {
 				lights[i].renderer.material.color = monuments[i].GetCurrentColor();
+
+				if (monuments[i].IsCharged() && lines[i] == null) {
+					LineBehaviour line = (LineBehaviour) Instantiate(linePrefab);
+					Color lineColor = monuments[i].GetCurrentColor();
+					lineColor.a = 0.25f;
+					line.Configure(monuments[i].GetLinePosition(), positions[i].position, lineColor, 10f, 2f, 0.5f);
+					lines[i] = line;
+				}
 			}
 		}
+	}
+
+	public bool IsCharged() {
+		return charged;
+	}
+
+	public Vector3 GetGemPosition() {
+		return gemPosition.position;
 	}
 
 	private IEnumerator ActivateRoutine() {

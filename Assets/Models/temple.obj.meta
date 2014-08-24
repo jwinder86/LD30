@@ -8,7 +8,7 @@ ModelImporter:
     100004: cube5_copy6
     100006: cube5_copy7
     100008: cylinder2
-    100010: icosahedron5
+    100010: cylinder9
     100012: //RootNode
     100014: torus1
     400000: cube3
@@ -16,7 +16,7 @@ ModelImporter:
     400004: cube5_copy6
     400006: cube5_copy7
     400008: cylinder2
-    400010: icosahedron5
+    400010: cylinder9
     400012: //RootNode
     400014: torus1
     2300000: cube3
@@ -24,21 +24,21 @@ ModelImporter:
     2300004: cube5_copy6
     2300006: cube5_copy7
     2300008: cylinder2
-    2300010: icosahedron5
+    2300010: cylinder9
     2300012: torus1
     3300000: cube3
     3300002: cube5
     3300004: cube5_copy6
     3300006: cube5_copy7
     3300008: cylinder2
-    3300010: icosahedron5
+    3300010: cylinder9
     3300012: torus1
     4300000: cube3
     4300002: cube5
     4300004: cube5_copy6
     4300006: cube5_copy7
     4300008: cylinder2
-    4300010: icosahedron5
+    4300010: cylinder9
     4300012: torus1
     9500000: //RootNode
     11100000: //RootNode

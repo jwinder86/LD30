@@ -12,6 +12,11 @@ public class ShipBehaviour : MonoBehaviour {
 
 	public float aimingForce = 1f;
 
+	public float stunTime = 1f;
+
+	public float bounceTime = 0.3f;
+	public float bounceForce = 10f;
+
 	private bool stunned;
 
 	// Use this for initialization
@@ -52,20 +57,28 @@ public class ShipBehaviour : MonoBehaviour {
 		}
 	}
 
-	public void Stun(Vector3 force) {
-		StopAllCoroutines();
-		StartCoroutine(StunRoutine());
+	void OnCollisionEnter(Collision collision) {
+		if (!stunned) {
+			StopAllCoroutines();
+			StartCoroutine(StunRoutine(bounceTime, collision.contacts[0].normal * bounceForce));
+		}
+	}
 
-		rigidbody.AddForce(force, ForceMode.VelocityChange);
+	public void Stun(Vector3 force) {
+		if (!stunned) {
+			StopAllCoroutines();
+			StartCoroutine(StunRoutine(stunTime, force));
+		}
 	}
 
 	public bool IsStunned() {
 		return stunned;
 	}
 
-	private IEnumerator StunRoutine() {
+	private IEnumerator StunRoutine(float time, Vector3 force) {
 		stunned = true;
-		yield return new WaitForSeconds(1f);
+		rigidbody.AddForce(force, ForceMode.VelocityChange);
+		yield return new WaitForSeconds(time);
 		rigidbody.angularVelocity = Vector3.zero;
 		stunned = false;
 	}

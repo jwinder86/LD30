@@ -53,6 +53,10 @@ public class MonumentBehaviour : HandleColorHitBehaviour {
 		}
 	}
 
+	public Vector3 GetLinePosition() {
+		return transform.position + new Vector3(0f, 6f, 0f);
+	}
+
 	private IEnumerator ActivateRoutine() {
 		animation.Play();
 

@@ -5,7 +5,6 @@ using System.Collections;
 public class GunBehaviour : MonoBehaviour {
 
 	public BulletBehaviour bulletPrefab;
-	public float fireDelay;
 	public float bulletSpeed = 20f;
 	public float chargeRate = 3f;
 

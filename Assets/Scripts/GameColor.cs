@@ -22,12 +22,12 @@ public class GameColor {
 	};
 
 	private static Dictionary<ColorName, Color> guiColors = new Dictionary<ColorName, Color>() {
-		{ColorName.Green, new Color(0.3f, 0.9f, 0.3f, 0.7f)},
-		{ColorName.Red, new Color(0.9f, 0.3f, 0.3f, 0.7f)},
-		{ColorName.Blue, new Color(0.3f, 0.3f, 0.9f, 0.7f)},
-		{ColorName.Yellow, new Color(0.9f, 0.9f, 0.3f, 0.7f)},
-		{ColorName.Purple, new Color(0.9f, 0.3f, 0.9f, 0.7f)},
-		{ColorName.Cyan, new Color(0.3f, 0.9f, 0.9f, 0.7f)}
+		{ColorName.Green, new Color(0.3f, 0.9f, 0.3f, 0.5f)},
+		{ColorName.Red, new Color(0.9f, 0.3f, 0.3f, 0.5f)},
+		{ColorName.Blue, new Color(0.3f, 0.3f, 0.9f, 0.5f)},
+		{ColorName.Yellow, new Color(0.9f, 0.9f, 0.3f, 0.5f)},
+		{ColorName.Purple, new Color(0.9f, 0.3f, 0.9f, 0.5f)},
+		{ColorName.Cyan, new Color(0.3f, 0.9f, 0.9f, 0.5f)}
 	};
 
 	private static Dictionary<ColorName, Color> dullColors = new Dictionary<ColorName, Color>() {
@@ -83,10 +83,8 @@ public class GameColor {
 		for (int i = 0; i < colorOrder.Count; i++) {
 			if (colorOrder[i].color == this.color) {
 				if (inverse) {
-					Debug.Log("Returning inverse");
 					return colorOrder[(i + 1) % colorOrder.Count];
 				} else {
-					Debug.Log("Returning next");
 					return colorOrder[(i + colorOrder.Count - 1) % colorOrder.Count];
 				}
 			}

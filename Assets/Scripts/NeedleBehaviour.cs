@@ -2,10 +2,9 @@
 using System.Collections;
 
 [RequireComponent (typeof(Rigidbody))]
-[RequireComponent (typeof(Rigidbody))]
+[RequireComponent (typeof(Collider))]
 public class NeedleBehaviour : HandleColorHitBehaviour {
 
-	public Transform target;
 	public Renderer model;
 
 	public float attackRange = 50f;
@@ -20,6 +19,7 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 
 	public float maxHealth = 1f;
 
+	private Transform target;
 	private bool attacking;
 	private float life;
 	private bool alive;
@@ -27,9 +27,10 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 	// Use this for initialization
 	void Start () {
 		attacking = false;
-		rigidbody.isKinematic = true;
 		life = maxHealth;
 		alive = true;
+
+		target = ((ShipBehaviour)FindObjectOfType(typeof(ShipBehaviour))).transform;
 	}
 	
 	// Update is called once per frame
@@ -68,6 +69,8 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 	}
 
 	private float RotateTowardTarget() {
+		rigidbody.angularVelocity = Vector3.zero;
+		rigidbody.velocity = Vector3.zero;
 		Vector3 toTarget = (target.position - transform.position).normalized;
 		float angle = Mathf.Atan2(toTarget.y, toTarget.x) * Mathf.Rad2Deg - 90f;
 
@@ -81,7 +84,9 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 	private IEnumerator DelayRoutine() {
 		attacking = true;
 		animation.Play();
-		yield return new WaitForSeconds(attackCoolDown);
+		yield return new WaitForSeconds(attackCoolDown * 2f);
+		rigidbody.angularVelocity = Vector3.zero;
+		rigidbody.velocity = Vector3.zero;
 		attacking = false;
 	}
 
@@ -92,12 +97,10 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 		animation.Stop();
 		yield return new WaitForSeconds(attackDelay);
 
-		float attackTimer = 0f;
-		while (attackTimer < attackTime) {
-			rigidbody.position += transform.up * attackSpeed * Time.deltaTime;
-			attackTimer += Time.deltaTime;
-			yield return null;
-		}
+		rigidbody.angularVelocity = Vector3.zero;
+		rigidbody.velocity = transform.up * attackSpeed;
+		yield return new WaitForSeconds(attackTime);
+		rigidbody.velocity = Vector3.zero;
 
 		animation.Play();
 
@@ -108,19 +111,17 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 			yield return null;
 		}
 
-		rigidbody.velocity = Vector3.zero;
-
 		attacking = false;
 		Debug.Log("Ending attack");
 	}
 
 	private IEnumerator DeathRoutine() {
-		Debug.Log("Starting Death");
 		alive = false;
-		//collider.enabled = false;
-		//model.enabled = false;
+		rigidbody.velocity = Vector3.zero;
+		collider.enabled = false;
+		model.enabled = false;
+
 		yield return new WaitForSeconds(1f);
-		Debug.Log("DeathComplete");
 		Destroy(gameObject);
 	}
 }
