@@ -15,6 +15,7 @@ public class TempleBehaviour : MonoBehaviour {
 	void Start () {
 		charged = false;
 		color = GameColor.FromName(colorName);
+		gem.renderer.material.color = color.DullColor();
 	}
 	
 	// Update is called once per frame

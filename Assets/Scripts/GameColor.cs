@@ -3,13 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 
 public class GameColor {
-	public enum ColorName { Red, Green, Blue, Yellow, Orange, Purple };
+	public enum ColorName { Red, Green, Blue, Yellow, Cyan, Purple };
 
 	public static GameColor Red = new GameColor(ColorName.Red);
 	public static GameColor Green = new GameColor(ColorName.Green);
 	public static GameColor Blue = new GameColor(ColorName.Blue);
 	public static GameColor Yellow = new GameColor(ColorName.Yellow);
-	public static GameColor Orange = new GameColor(ColorName.Orange);
+	public static GameColor Cyan = new GameColor(ColorName.Cyan);
 	public static GameColor Purple = new GameColor(ColorName.Purple);
 
 	private static Dictionary<ColorName, GameColor> colorByName = new Dictionary<ColorName, GameColor>() {
@@ -17,7 +17,7 @@ public class GameColor {
 		{ColorName.Green, Green},
 		{ColorName.Blue, Blue},
 		{ColorName.Yellow, Yellow},
-		{ColorName.Orange, Orange},
+		{ColorName.Cyan, Cyan},
 		{ColorName.Purple, Purple}
 	};
 
@@ -26,8 +26,8 @@ public class GameColor {
 		{ColorName.Red, new Color(0.9f, 0.3f, 0.3f, 0.7f)},
 		{ColorName.Blue, new Color(0.3f, 0.3f, 0.9f, 0.7f)},
 		{ColorName.Yellow, new Color(0.9f, 0.9f, 0.3f, 0.7f)},
-		{ColorName.Purple, new Color(0.6f, 0.3f, 0.9f, 0.7f)},
-		{ColorName.Orange, new Color(0.9f, 0.6f, 0.3f, 0.7f)}
+		{ColorName.Purple, new Color(0.9f, 0.3f, 0.9f, 0.7f)},
+		{ColorName.Cyan, new Color(0.3f, 0.9f, 0.9f, 0.7f)}
 	};
 
 	private static Dictionary<ColorName, Color> dullColors = new Dictionary<ColorName, Color>() {
@@ -35,8 +35,8 @@ public class GameColor {
 		{ColorName.Red, new Color(0.4f, 0.3f, 0.3f, 1f)},
 		{ColorName.Blue, new Color(0.3f, 0.3f, 0.4f, 1f)},
 		{ColorName.Yellow, new Color(0.4f, 0.4f, 0.3f, 1f)},
-		{ColorName.Purple, new Color(0.35f, 0.3f, 0.4f, 1f)},
-		{ColorName.Orange, new Color(0.4f, 0.35f, 0.3f, 1f)}
+		{ColorName.Purple, new Color(0.4f, 0.3f, 0.4f, 1f)},
+		{ColorName.Cyan, new Color(0.3f, 0.4f, 0.4f, 1f)}
 	};
 
 	private static Dictionary<ColorName, Color> gemColors = new Dictionary<ColorName, Color>() {
@@ -44,15 +44,15 @@ public class GameColor {
 		{ColorName.Red, new Color(1f, 0.4f, 0.4f, 1f)},
 		{ColorName.Blue, new Color(0.4f, 0.4f, 1f, 1f)},
 		{ColorName.Yellow, new Color(1f, 1f, 0.4f, 1f)},
-		{ColorName.Purple, new Color(0.7f, 0.4f, 1f, 1f)},
-		{ColorName.Orange, new Color(1f, 0.7f, 0.4f, 1f)}
+		{ColorName.Purple, new Color(1f, 0.4f, 1f, 1f)},
+		{ColorName.Cyan, new Color(0.4f, 1f, 1f, 1f)}
 	};
 
 	private static List<GameColor> colorOrder = new List<GameColor>(new GameColor[] {
 		GameColor.Red,
-		GameColor.Orange,
 		GameColor.Yellow,
 		GameColor.Green,
+		GameColor.Cyan,
 		GameColor.Blue,
 		GameColor.Purple
 	});

@@ -3,9 +3,11 @@ using System.Collections;
 
 [RequireComponent (typeof(Rigidbody))]
 [RequireComponent (typeof(Rigidbody))]
-public class NeedleBehaviour : MonoBehaviour {
+public class NeedleBehaviour : HandleColorHitBehaviour {
 
 	public Transform target;
+	public Renderer model;
+
 	public float attackRange = 50f;
 	public float turnRate = 360f;
 	public float attackAngleDiff = 5f;
@@ -16,22 +18,36 @@ public class NeedleBehaviour : MonoBehaviour {
 	public float attackCoolDown = 2f;
 	public float attackForce = 10f;
 
+	public float maxHealth = 1f;
+
 	private bool attacking;
+	private float life;
+	private bool alive;
 
 	// Use this for initialization
 	void Start () {
 		attacking = false;
 		rigidbody.isKinematic = true;
+		life = maxHealth;
+		alive = true;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		Debug.DrawLine(transform.position, transform.position + (target.position - transform.position).normalized * attackRange, Color.red);
-		if ((target.position - transform.position).magnitude <= attackRange && !attacking) {
-			float angleError = Mathf.Abs(RotateTowardTarget());
-			Debug.Log("Angle diff" + angleError);
-			if (angleError < attackAngleDiff) {
-				StartCoroutine(AttackRoutine());
+
+		if (alive) {
+			if ((target.position - transform.position).magnitude <= attackRange && !attacking) {
+				float angleError = Mathf.Abs(RotateTowardTarget());
+				Debug.Log("Angle diff" + angleError);
+				if (angleError < attackAngleDiff) {
+					StartCoroutine(AttackRoutine());
+				}
+			}
+
+			if (life <= 0f) {
+				StopAllCoroutines();
+				StartCoroutine(DeathRoutine());
 			}
 		}
 	}
@@ -45,6 +61,10 @@ public class NeedleBehaviour : MonoBehaviour {
 
 		StopAllCoroutines();
 		StartCoroutine(DelayRoutine());
+	}
+
+	public override void HandleColor(GameColor color, float amount) {
+		life -= amount;
 	}
 
 	private float RotateTowardTarget() {
@@ -92,5 +112,15 @@ public class NeedleBehaviour : MonoBehaviour {
 
 		attacking = false;
 		Debug.Log("Ending attack");
+	}
+
+	private IEnumerator DeathRoutine() {
+		Debug.Log("Starting Death");
+		alive = false;
+		//collider.enabled = false;
+		//model.enabled = false;
+		yield return new WaitForSeconds(1f);
+		Debug.Log("DeathComplete");
+		Destroy(gameObject);
 	}
 }

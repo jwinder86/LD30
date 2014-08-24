@@ -29,7 +29,7 @@ public class ReservoirBehaviour : MonoBehaviour {
 		tanks[GameColor.Blue] = tankSize;
 		tanks[GameColor.Yellow] = tankSize;
 		tanks[GameColor.Purple] = tankSize;
-		tanks[GameColor.Orange] = tankSize;
+		tanks[GameColor.Cyan] = tankSize;
 
 	}
 	

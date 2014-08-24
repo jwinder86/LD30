@@ -4,6 +4,8 @@ using System.Collections;
 [RequireComponent (typeof(Rigidbody))]
 public class ShipBehaviour : MonoBehaviour {
 
+	public Animation shipAnim;
+
 	public float thrustForce = 1f;
 	public float rotSpeed = 180f;
 	public float maxSpeed = 5f;
@@ -28,6 +30,8 @@ public class ShipBehaviour : MonoBehaviour {
 			transform.rotation = Quaternion.Euler(0f, 0f, newAngle);
 
 			if (Input.GetButton("Fire2")) {
+				shipAnim.Play();
+
 				float dot = Vector3.Dot(rigidbody.velocity, transform.up);
 
 				if (dot < 0f || rigidbody.velocity.magnitude < maxSpeed) {
@@ -40,7 +44,11 @@ public class ShipBehaviour : MonoBehaviour {
 				Debug.DrawLine(transform.position, transform.position - transform.right * Vector3.Dot(rigidbody.velocity, transform.right) * aimingForce * 5, Color.green);
 
 				rigidbody.AddForce(-transform.right * Vector3.Dot(rigidbody.velocity, transform.right) * aimingForce, ForceMode.Acceleration);
+			} else {
+				shipAnim.Stop();
 			}
+		} else {
+			shipAnim.Stop();
 		}
 	}
 
