@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof(AudioSource))]
 public class TempleBehaviour : MonoBehaviour {
 
 	public LineBehaviour linePrefab;
@@ -9,8 +10,11 @@ public class TempleBehaviour : MonoBehaviour {
 	public Transform[] lights;
 	public Transform[] positions;
 	public Transform gemPosition;
+	public ColorBlobBehaviour colorBlobPrefab;
 	public MonumentBehaviour[] monuments;
 	public GameColor.ColorName colorName;
+
+	public AudioClip powerup;
 
 	private GameColor color;
 	private bool charged;
@@ -65,7 +69,12 @@ public class TempleBehaviour : MonoBehaviour {
 	}
 
 	private IEnumerator ActivateRoutine() {
+		ColorBlobBehaviour blob = (ColorBlobBehaviour) Instantiate(colorBlobPrefab, gemPosition.position + new Vector3(0f, 10f, 0f), Quaternion.identity);
+		blob.SetColor(color);
+
 		animation.Play();
+
+		audio.PlayOneShot(powerup);
 		
 		Color startColor = gem.renderer.material.color;
 		

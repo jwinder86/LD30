@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
+[RequireComponent (typeof(AudioSource))]
 public class ReservoirBehaviour : HandleColorHitBehaviour {
 	
 	public float tankSize = 10f;
@@ -12,6 +13,8 @@ public class ReservoirBehaviour : HandleColorHitBehaviour {
 	public float iconHeightRatio;
 
 	public bool giveAll = false;
+
+	public AudioClip gotColor;
 
 	private Dictionary<GameColor, float> tanks;
 	private GameColor currentColor;
@@ -50,6 +53,8 @@ public class ReservoirBehaviour : HandleColorHitBehaviour {
 	}
 
 	public override void HandleColor(GameColor color, float amount) {
+		audio.PlayOneShot(gotColor);
+
 		if (!tanks.ContainsKey(color)) {
 			tanks[color] = Mathf.Min(amount, tankSize);
 		} else {

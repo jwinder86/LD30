@@ -3,6 +3,8 @@ using System.Collections;
 
 [RequireComponent (typeof(Rigidbody))]
 [RequireComponent (typeof(Collider))]
+[RequireComponent (typeof(AudioSource))]
+[RequireComponent (typeof(ParticleSystem))]
 public class NeedleBehaviour : HandleColorHitBehaviour {
 
 	public Renderer model;
@@ -19,10 +21,16 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 
 	public float maxHealth = 1f;
 
+	public AudioClip zoom;
+	public AudioClip bump;
+	public AudioClip dead;
+
 	private Transform target;
 	private bool attacking;
 	private float life;
 	private bool alive;
+
+	private Vector3 startPos;
 
 	// Use this for initialization
 	void Start () {
@@ -31,6 +39,8 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 		alive = true;
 
 		target = ((ShipBehaviour)FindObjectOfType(typeof(ShipBehaviour))).transform;
+
+		startPos = transform.position;
 	}
 	
 	// Update is called once per frame
@@ -60,6 +70,7 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 			ship.Stun(force);
 		}
 
+		audio.PlayOneShot(bump);
 		StopAllCoroutines();
 		StartCoroutine(DelayRoutine());
 	}
@@ -97,6 +108,7 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 		animation.Stop();
 		yield return new WaitForSeconds(attackDelay);
 
+		audio.PlayOneShot(zoom);
 		rigidbody.angularVelocity = Vector3.zero;
 		rigidbody.velocity = transform.up * attackSpeed;
 		yield return new WaitForSeconds(attackTime);
@@ -120,6 +132,9 @@ public class NeedleBehaviour : HandleColorHitBehaviour {
 		rigidbody.velocity = Vector3.zero;
 		collider.enabled = false;
 		model.enabled = false;
+
+		audio.PlayOneShot(dead);
+		particleSystem.Play();
 
 		yield return new WaitForSeconds(1f);
 		Destroy(gameObject);

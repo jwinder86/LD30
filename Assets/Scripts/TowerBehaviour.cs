@@ -1,6 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof(AudioSource))]
+[RequireComponent (typeof(ParticleSystem))]
 public class TowerBehaviour : HandleColorHitBehaviour {
 
 	public TowerBullet bulletPrefab;
@@ -9,15 +11,22 @@ public class TowerBehaviour : HandleColorHitBehaviour {
 	public float attackRange = 50f;
 	public float life = 1f;
 
+	public AudioClip zap;
+	public AudioClip dead;
+
 	private Rigidbody target;
 	private bool attacking;
 	private bool alive;
+
+	private Renderer[] renderers;
 
 	// Use this for initialization
 	void Start () {
 		attacking = false;
 		target = ((ShipBehaviour)FindObjectOfType(typeof(ShipBehaviour))).rigidbody;
 		alive = true;
+
+		renderers = GetComponentsInChildren<Renderer>();
 	}
 	
 	// Update is called once per frame
@@ -30,6 +39,7 @@ public class TowerBehaviour : HandleColorHitBehaviour {
 
 				TowerBullet bullet = (TowerBullet) Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0f, 0f, angle));
 				bullet.rigidbody.velocity = toTarget * bulletSpeed;
+				audio.PlayOneShot(zap);
 
 				StartCoroutine(AttackRoutine());
 			}
@@ -55,7 +65,16 @@ public class TowerBehaviour : HandleColorHitBehaviour {
 	
 	private IEnumerator DeathRoutine() {
 		alive = false;
-		yield return new WaitForSeconds(1f);
+		audio.PlayOneShot(dead);
+		particleSystem.Play();
+
+		foreach (Renderer r in renderers) {
+			if (!(r is ParticleSystemRenderer)) {
+				r.enabled = false;
+			}
+		}
+
+		yield return new WaitForSeconds(2f);
 
 
 		Destroy(gameObject);

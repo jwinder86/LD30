@@ -1,12 +1,16 @@
 ﻿using UnityEngine;
 using System.Collections;
 
+[RequireComponent (typeof(AudioSource))]
 public class MonumentBehaviour : HandleColorHitBehaviour {
 
 	public float amountRequired;
 	public GameColor.ColorName colorName;
 	public Transform bar;
 	public Transform gem;
+
+	public AudioClip colorGot;
+	public AudioClip colorFilled;
 
 	private GameColor color;
 	private float filled;
@@ -29,6 +33,8 @@ public class MonumentBehaviour : HandleColorHitBehaviour {
 	public override void HandleColor(GameColor color, float amount) {
 		if (this.color == color && filled < amountRequired) {
 			filled += amount;
+
+			audio.PlayOneShot(colorGot);
 
 			if (filled >= amountRequired) {
 				filled = amountRequired;
@@ -59,6 +65,8 @@ public class MonumentBehaviour : HandleColorHitBehaviour {
 
 	private IEnumerator ActivateRoutine() {
 		animation.Play();
+
+		audio.PlayOneShot(colorFilled);
 
 		Color startColor = gem.renderer.material.color;
 

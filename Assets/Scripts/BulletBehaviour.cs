@@ -3,9 +3,15 @@ using System.Collections;
 
 [RequireComponent (typeof(Collider))]
 [RequireComponent (typeof(Rigidbody))]
+[RequireComponent (typeof(ParticleSystem))]
+[RequireComponent (typeof(AudioSource))]
 public class BulletBehaviour : MonoBehaviour {
 
 	public float lifetime;
+
+	public ParticleSystem popParticles;
+
+	public AudioClip colorHit;
 
 	private bool alive;
 	private GameColor color;
@@ -28,6 +34,7 @@ public class BulletBehaviour : MonoBehaviour {
 			other.ReceiveColor(color, colorAmount);
 		}
 
+		audio.PlayOneShot(colorHit);
 		DestroySelf ();
 	}
 
@@ -35,6 +42,9 @@ public class BulletBehaviour : MonoBehaviour {
 		this.color = color;
 		this.colorAmount = amount;
 		renderer.material.color = color.GemColor();
+
+		GetComponent<ParticleSystemRenderer>().material.SetColor("_TintColor", color.GemColor());
+		popParticles.GetComponent<ParticleSystemRenderer>().material.SetColor("_TintColor", color.GemColor());
 	}
 
 	private void DestroySelf() {
@@ -53,6 +63,9 @@ public class BulletBehaviour : MonoBehaviour {
 		renderer.enabled = false;
 		collider.enabled = false;
 		rigidbody.isKinematic = true;
+		particleSystem.enableEmission = false;
+
+		popParticles.Play();
 
 		yield return new WaitForSeconds(2f);
 		Destroy(gameObject);

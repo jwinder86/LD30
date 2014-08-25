@@ -11,6 +11,10 @@ public class MainTowerBehaviour : MonoBehaviour {
 	public GemBehaviour[] gems;
 	public TempleBehaviour[] temples;
 
+	public Transform endPosition;
+	public GameObject endPrefab;
+	private bool endCreated;
+
 	private Dictionary<GameColor, GemBehaviour> gemMap;
 	private Dictionary<GameColor, bool> gemActive;
 	private Dictionary<GameColor, TempleBehaviour> templeMap;
@@ -35,6 +39,8 @@ public class MainTowerBehaviour : MonoBehaviour {
 				templeMap[color] = temples[i];
 			}
 		}
+
+		endCreated = false;
 	}
 	
 	// Update is called once per frame
@@ -61,6 +67,36 @@ public class MainTowerBehaviour : MonoBehaviour {
 			EnsureGemActive(GameColor.Blue);
 		} else if (templeMap[GameColor.Green].IsCharged() && templeMap[GameColor.Cyan].IsCharged()){
 			EnsureLine(GameColor.Blue, false);
+		}
+
+		// Red Logic
+		if (templeMap[GameColor.Red].IsCharged()) {
+			EnsureLine(GameColor.Red, true);
+			EnsureGemActive(GameColor.Red);
+		} else if (templeMap[GameColor.Green].IsCharged() && templeMap[GameColor.Cyan].IsCharged()){
+			EnsureLine(GameColor.Red, false);
+		}
+
+		// Yellow Logic
+		if (templeMap[GameColor.Yellow].IsCharged()) {
+			EnsureLine(GameColor.Yellow, true);
+			EnsureGemActive(GameColor.Yellow);
+		} else if (templeMap[GameColor.Red].IsCharged() && templeMap[GameColor.Blue].IsCharged() && templeMap[GameColor.Cyan].IsCharged()){
+			EnsureLine(GameColor.Yellow, false);
+		}
+
+		// Purple Logic
+		if (templeMap[GameColor.Purple].IsCharged()) {
+			EnsureLine(GameColor.Purple, true);
+			EnsureGemActive(GameColor.Purple);
+		} else if (templeMap[GameColor.Red].IsCharged() && templeMap[GameColor.Blue].IsCharged() && templeMap[GameColor.Yellow].IsCharged()){
+			EnsureLine(GameColor.Purple, false);
+		}
+
+		// End Logic
+		if (templeMap[GameColor.Purple].IsCharged() && !endCreated) {
+			Instantiate(endPrefab, endPosition.position, Quaternion.identity);
+			endCreated = true;
 		}
 	}
 
@@ -98,7 +134,7 @@ public class MainTowerBehaviour : MonoBehaviour {
 		Vector3 start = gemMap[color].transform.position;
 		Vector3 end = templeMap[color].GetGemPosition();
 		LineBehaviour line = (LineBehaviour) Instantiate(faintLinePrefab, start, Quaternion.identity);
-		line.Configure(start, end, new Color(1f, 1f, 1f, 0.3f), 20f, 2f, 0.5f);
+		line.Configure(start, end, new Color(1f, 1f, 1f, 0.3f), 20f, 2f, 2f);
 		return line;
 	}
 
@@ -108,7 +144,7 @@ public class MainTowerBehaviour : MonoBehaviour {
 		LineBehaviour line = (LineBehaviour) Instantiate(boldLinePrefab, start, Quaternion.identity);
 		Color lineColor = color.GemColor();
 		lineColor.a = 0.25f;
-		line.Configure(start, end, lineColor, 20f, 2f, 0.5f);
+		line.Configure(start, end, lineColor, 30f, 1f, 0.5f);
 		return line;
 	}
 }

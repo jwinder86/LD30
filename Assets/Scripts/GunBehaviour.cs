@@ -2,11 +2,14 @@
 using System.Collections;
 
 [RequireComponent (typeof(ReservoirBehaviour))]
+[RequireComponent (typeof(AudioSource))]
 public class GunBehaviour : MonoBehaviour {
 
 	public BulletBehaviour bulletPrefab;
 	public float bulletSpeed = 20f;
 	public float chargeRate = 3f;
+
+	public AudioClip shootSound;
 
 	private float shotPower;
 
@@ -29,6 +32,8 @@ public class GunBehaviour : MonoBehaviour {
 			}
 
 			if (Input.GetButtonUp("Fire1") && shotPower > 0f) {
+				audio.PlayOneShot(shootSound);
+
 				float radius = Mathf.Sqrt(shotPower);
 				BulletBehaviour bullet = (BulletBehaviour) Instantiate(bulletPrefab, transform.position + transform.up * (2f + radius), Quaternion.identity);
 				bullet.SetColor(reservoir.GetCurrentColor(), shotPower);
